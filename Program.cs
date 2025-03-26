@@ -50,29 +50,27 @@
         }
     }
 
-    public class Logger
+    public static class StaticLogger
     {
-        public Logger instance;
-
-        public Logger()
+        static StaticLogger()
         {
 
         }
 
-        public void Log(Singleton.LogLevel level, string message)
+        public static void Log(Singleton.LogLevel level, string message)
         {
             switch(level)
             {
                 case LogLevel.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(message);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ResetColor();
                     Environment.Exit(1);
                     break;
                 case LogLevel.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(message);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ResetColor();
                     break;
                 case LogLevel.Comment:
                 Console.ForegroundColor = ConsoleColor.White;
@@ -84,21 +82,6 @@
         }
     }
 
-    public static class StaticLogger
-    {
-        private static Logger instance;
-
-        static StaticLogger()
-        {
-            instance = new Logger();
-        }
-
-        public static Logger Instance()
-        {
-            return instance;
-        }
-    }
-
     public class Program
     {
         public static void Main(string[] args)
@@ -106,18 +89,17 @@
             Console.WriteLine("Creating Singleton logger...");
             SingletonLogger singletonLogger = SingletonLogger.Instance();
 
-            singletonLogger.Log(LogLevel.Comment, "Test comment...");
-            singletonLogger.Log(LogLevel.Warning, "Test warning...");
-            //singletonLogger.Log(LogLevel.Error, "Test error...");
-            singletonLogger.Log(LogLevel.Comment, "Test comment again...");
+            singletonLogger.Log(LogLevel.Comment, "Test singleton comment...");
+            singletonLogger.Log(LogLevel.Warning, "Test singleton warning...");
+            //singletonLogger.Log(LogLevel.Error, "Test singleton error...");
+            singletonLogger.Log(LogLevel.Comment, "Test singleton comment again...");
 
-            Console.WriteLine("Creating Static logger...");
-            Logger staticLogger = StaticLogger.Instance();
+            Console.WriteLine("Using Static logger...");
 
-            staticLogger.Log(LogLevel.Comment, "Test comment...");
-            staticLogger.Log(LogLevel.Warning, "Test warning...");
-            staticLogger.Log(LogLevel.Error, "Test error...");
-            staticLogger.Log(LogLevel.Comment, "Test comment again...");
+            StaticLogger.Log(LogLevel.Comment, "Test static comment...");
+            StaticLogger.Log(LogLevel.Warning, "Test static warning...");
+            StaticLogger.Log(LogLevel.Error, "Test static error...");
+            StaticLogger.Log(LogLevel.Comment, "Test static comment again...");
 
 
         }
