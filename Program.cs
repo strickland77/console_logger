@@ -12,7 +12,6 @@
 
         private SingletonLogger()
         {
-
         }
         
         public static SingletonLogger Instance()
@@ -32,13 +31,13 @@
                 case LogLevel.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(message);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ResetColor();
                     Environment.Exit(1);
                     break;
                 case LogLevel.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(message);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ResetColor();
                     break;
                 case LogLevel.Comment:
                 Console.ForegroundColor = ConsoleColor.White;
@@ -100,8 +99,6 @@
             StaticLogger.Log(LogLevel.Warning, "Test static warning...");
             StaticLogger.Log(LogLevel.Error, "Test static error...");
             StaticLogger.Log(LogLevel.Comment, "Test static comment again...");
-
-
         }
     }
 }
